@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results — SmartFit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+  <script type="module" src="../js/authGuard.js"></script>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .result-section { background: var(--lux-bg); }
+    .result-showcase { margin-top: 2rem; }
+    .result-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .result-image {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 6px;
+      overflow: hidden;
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .result-image h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--lux-gold);
+      margin-bottom: 1rem;
+    }
+    .result-image img {
+      max-width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .result-img-placeholder {
+      width: 100%;
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--lux-muted);
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      background: rgba(255,255,255,0.02);
+      border-radius: 4px;
+      border: 1px dashed rgba(212,175,55,0.1);
+    }
+    .result-details {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.12);
+      border-radius: 6px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    .result-details h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--lux-text);
+      margin-bottom: 0.75rem;
+    }
+    .result-details p { color: var(--lux-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.75rem; }
+    .result-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 2rem; }
+    .suggestion-section { margin-top: 3rem; }
+    .suggestion-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--lux-text);
+      margin-bottom: 1.5rem;
+    }
+    .suggestions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .social-share { margin-top: 1.5rem; }
+    .social-share h4 {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--lux-gold);
+      margin-bottom: 0.8rem;
+    }
+    .social-buttons { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .social-btn {
+      padding: 0.5rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: var(--lux-text);
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      transition: all 0.3s;
+    }
+    .social-btn:hover { background: rgba(212,175,55,0.08); border-color: rgba(212,175,55,0.3); color: var(--lux-gold); }
+    @media (max-width: 768px) { .result-comparison { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body class="luxury-page">
+
+  <!-- ── LUXURY NAVBAR ──────────────────────────────────────── -->
+  <nav class="luxury-nav" id="luxuryNav">
+    <a href="index.html" class="lux-logo">SmartFit<span>.</span></a>
+    <ul class="luxury-nav-links" id="luxNavLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="upload.html">Try On</a></li>
+      <li><a href="catalog.html">Catalog</a></li>
+      <li><a href="result.html">Results</a></li>
+      <li><a href="profile.html">Profile</a></li>
+    </ul>
+    <a href="signin.html" id="authButton" class="lux-signin-btn">Sign In</a>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ── RESULT SECTION ─────────────────────────────────────── -->
+  <section class="luxury-section result-section">
+    <div class="container">
+      <div class="lux-section-label">AI Output</div>
+      <h1 class="lux-section-title">Your Virtual Try-On Result</h1>
+
+      <div class="result-showcase">
+        <div class="result-comparison">
+          <div class="result-image">
+            <h3>Before</h3>
+            <div class="result-img-placeholder" id="originalPlaceholder">Upload a photo to begin</div>
+            <img src="" alt="Original Photo" id="originalPhoto" style="display:none;">
+          </div>
+          <div class="result-image">
+            <h3>After — AI Generated</h3>
+            <div class="result-img-placeholder" id="resultPlaceholder">Try-on result will appear here</div>
+            <img src="" alt="Try-On Result" id="resultPhoto" style="display:none;">
+          </div>
+        </div>
+
+        <div class="result-details">
+          <h2 id="dressName">Selected Dress</h2>
+          <p id="dressDescription">Beautiful dress perfect for any occasion. Generated by SmartFit AI pipeline.</p>
+
+          <div class="result-actions">
+            <button class="lux-btn-primary" id="downloadResult">
+              <span>📥</span> Download Image
+            </button>
+            <button class="lux-btn-secondary" id="saveToProfile">
+              <span>💾</span> Save to Profile
+            </button>
+            <button class="lux-btn-secondary" id="shareResult">
+              <span>🔗</span> Share Result
+            </button>
+            <a href="upload.html" class="lux-btn-secondary">← Try Another</a>
+          </div>
+
+          <div class="social-share">
+            <h4>Share on Social Media</h4>
+            <div class="social-buttons">
+              <button class="social-btn facebook">Facebook</button>
+              <button class="social-btn instagram">Instagram</button>
+              <button class="social-btn twitter">Twitter</button>
+              <button class="social-btn whatsapp">WhatsApp</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestion-section">
+          <h3>You Might Also Like</h3>
+          <div class="suggestions-grid" id="suggestionsGrid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer class="luxury-footer">
+    <div class="footer-logo">SmartFit<span>.</span></div>
+    <p class="footer-copy">© 2025 SmartFit Inc. — Intelligent Styling</p>
+  </footer>
+
+  <!-- ── LOADER ─────────────────────────────────────────────── -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="particle-container">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div>
+      </div>
+      <p id="loaderText">Loading your result...</p>
+    </div>
+  </div>
+
+  <script>
+    // Save to Profile → navigate to profile.html
+    const saveBtn = document.getElementById('saveToProfile');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        const result = {
+          dressName: document.getElementById('dressName')?.textContent || 'Unknown Dress',
+          timestamp: new Date().toISOString(),
+          resultSrc: document.getElementById('resultPhoto')?.src || '',
+          originalSrc: document.getElementById('originalPhoto')?.src || '',
+        };
+        const history = JSON.parse(localStorage.getItem('SmartFit_history') || '[]');
+        history.unshift(result);
+        localStorage.setItem('SmartFit_history', JSON.stringify(history.slice(0, 50)));
+        window.location.href = 'profile.html';
+      });
+    }
+    // Show stored images if available
+    window.addEventListener('DOMContentLoaded', () => {
+      const tryOn = JSON.parse(localStorage.getItem('SmartFit_current_result') || 'null');
+      if (tryOn) {
+        if (tryOn.resultImage) {
+          const img = document.getElementById('resultPhoto');
+          img.src = tryOn.resultImage;
+          img.style.display = 'block';
+          document.getElementById('resultPlaceholder').style.display = 'none';
+        }
+        if (tryOn.originalImage) {
+          const img2 = document.getElementById('originalPhoto');
+          img2.src = tryOn.originalImage;
+          img2.style.display = 'block';
+          document.getElementById('originalPlaceholder').style.display = 'none';
+        }
+        if (tryOn.dressName) document.getElementById('dressName').textContent = tryOn.dressName;
+        if (tryOn.dressDescription) document.getElementById('dressDescription').textContent = tryOn.dressDescription;
+      }
+    });
+  </script>
+  <script src="../js/cursor.js"></script>
+  <script src="../js/loader.js"></script>
+  <script src="../js/result.js"></script>
+  <script type="module" src="../js/navbarAuth.js"></script>
+  <script src="../js/nav.js"></script>
+</body>
+</html>
