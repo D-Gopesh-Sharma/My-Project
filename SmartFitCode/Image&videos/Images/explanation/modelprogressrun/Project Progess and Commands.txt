@@ -1,0 +1,61 @@
+FashioLens / WGF-VITON — COMPLETE PACKAGE LIST
+🔹 Conda environment
+
+Python 3.8.x
+
+🔹 Core ML stack
+
+torch==1.13.1
+
+torchvision==0.14.1
+
+torchaudio==0.13.1
+
+pytorch-cuda==11.6
+
+🔹 Required Python packages
+numpy
+pillow
+opencv-python
+tqdm
+tensorboardX
+thop
+scipy
+scikit-image
+matplotlib
+imageio
+einops
+
+🚀 ONE-TIME SETUP (RUN LATER FROM SCRATCH)
+1️⃣ Create & activate environment
+conda create -n fashiolens python=3.8 -y
+conda activate fashiolens
+
+2️⃣ Install PyTorch + CUDA (MATCHED)
+conda install pytorch=1.13.1 torchvision=0.14.1 torchaudio=0.13.1 pytorch-cuda=11.6 -c pytorch -c nvidia -y
+
+3️⃣ Install ALL remaining dependencies (SAFE ONE-SHOT)
+python -m pip install --upgrade pip
+pip install numpy pillow opencv-python tqdm tensorboardX thop scipy scikit-image matplotlib imageio einops
+
+4️⃣ Quick verification (optional but recommended)
+python -c "import torch, cv2, numpy, PIL, scipy, skimage, tqdm, tensorboardX, thop; print('ALL IMPORTS OK')"
+
+
+Expected:
+
+ALL IMPORTS OK
+
+▶️ FINAL RUN COMMAND (SAVE THIS)
+conda activate fashiolens
+cd /d A:\Study-Store\My_Project\Major Project\FashioLens
+python test.py --name fashiolens --batch-size 1 --workers 0 --dataroot datasets/fashion_tb --wearing test_unpair_mild.json --checkpoint checkpoints/fashiolens/step_G_200000.pth --gpu_ids 0
+
+📂 OUTPUT LOCATION (IMPORTANT)
+
+Results are saved in:
+
+result\fashiolens\
+
+
+This folder contains your final virtual try-on images.
